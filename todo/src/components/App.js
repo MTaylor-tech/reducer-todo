@@ -1,9 +1,10 @@
-import React, {useReducer, useState} from 'react';
+import React, {useReducer, useState, useEffect} from 'react';
 import styled from 'styled-components';
 import '../stylesheets/App.css';
 import TodoList from './TodoList';
 import TodoForm from './TodoForm';
 import todoReducer, {initialTodos} from '../reducers/todoReducer';
+import useLocalStorage from '../hooks/useLocalStorage';
 
 
 const MainDiv = styled.div`
@@ -19,7 +20,12 @@ const MainDiv = styled.div`
 `;
 
 function App () {
-  const [state, dispatch] = useReducer(todoReducer, {todos: initialTodos});
+  const [todos, setTodos] = useLocalStorage("myVeryAwesomeTodos",initialTodos);
+  const [state, dispatch] = useReducer(todoReducer, {todos: todos});
+
+  useEffect(()=>{
+    setTodos(state.todos);
+  },[state.todos]);
 
   const addTodo = (newTodo) => {
     dispatch({type: 'ADD', payload: newTodo});
