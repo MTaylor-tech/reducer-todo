@@ -46,5 +46,3 @@ test('calls props.markComplete fn when clicked', () => {
   fireEvent.click(checkBoxElement);
   expect(mockFunction.mock.calls.length).toBe(2);
 });
-
-//<Todo task={t} key={t.id} markComplete={props.markComplete} />
