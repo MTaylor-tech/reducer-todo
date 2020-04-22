@@ -1,4 +1,4 @@
-import React, {useReducer} from 'react';
+import React, {useReducer, useState} from 'react';
 import styled from 'styled-components';
 import '../stylesheets/App.css';
 import TodoList from './TodoList';
@@ -21,11 +21,23 @@ const MainDiv = styled.div`
 function App () {
   const [state, dispatch] = useReducer(todoReducer, {todos: initialTodos});
 
+  const addTodo = (newTodo) => {
+    dispatch({type: 'ADD', payload: newTodo});
+  };
+
+  const markComplete = (taskId, completed) => {
+    dispatch({type: 'TOGGLE_COMPLETED', payload: {taskId: taskId, completed:completed}});
+  };
+
+  const clearCompleted = () => {
+    dispatch({type: 'CLEAR_COMPLETED'});
+  };
+
   return (
     <MainDiv>
       <h1>Quick To-Do List</h1>
-      <TodoForm />
-      <TodoList list={state.todos} />
+      <TodoForm addTask={addTodo} clearCompleted={clearCompleted} />
+      <TodoList list={state.todos} markComplete={markComplete} />
     </MainDiv>
   );
 }

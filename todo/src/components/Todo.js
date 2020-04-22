@@ -18,8 +18,8 @@ const TodoDiv = styled.div`
 function Todo(props) {
   return (
     <TodoDiv>
-      {props.task.completed?<input name={props.task.id} type="checkbox" defaultChecked onChange={null} />:<input name={props.task.id} type="checkbox" onChange={null} />}
-      {props.task.completed?<label htmlFor={props.task.id} className="strikeThru" onClick={null} >{props.task.item}</label>:<label htmlFor={props.task.id} onClick={null} >{props.task.item}</label>}
+      {props.task.completed?<input name={props.task.id} type="checkbox" checked onChange={()=>props.markComplete(props.task.id,false)} />:<input name={props.task.id} type="checkbox" onChange={()=>props.markComplete(props.task.id,true)} />}
+      {props.task.completed?<label htmlFor={props.task.id} className="strikeThru" onClick={()=>props.markComplete(props.task.id,false)} >{props.task.item}</label>:<label htmlFor={props.task.id} onClick={()=>props.markComplete(props.task.id,true)} >{props.task.item}</label>}
     </TodoDiv>
   );
 }

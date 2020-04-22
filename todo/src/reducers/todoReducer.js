@@ -19,11 +19,11 @@ export const initialTodos = [
 export default function todoReducer (state, action) {
   switch (action.type) {
       case 'INITIAL_VALUES':
-        return initialTodos;
-      case 'NEW_TODO':
-        return [...state, {item:action.payload.item, completed: false, id: new Date()}];
-      case 'MARK_COMPLETED':
-        return state.map(task=>{
+        return {...state, todos: initialTodos};
+      case 'ADD':
+        return {...state, todos: [...state.todos, {item:action.payload, completed: false, id: new Date()}]};
+      case 'TOGGLE_COMPLETED':
+        return {...state, todos: state.todos.map(task=>{
               if (task.id===action.payload.taskId) {
                 return {
                   item: task.item,
@@ -32,9 +32,9 @@ export default function todoReducer (state, action) {
                 };
               } else {
                 return task;
-              }});
+              }})};
       case 'CLEAR_COMPLETED':
-        return state.filter(t=>!t.completed);
+        return {...state, todos: state.todos.filter(t=>t.completed===false)};
       default:
         return state;
     }
