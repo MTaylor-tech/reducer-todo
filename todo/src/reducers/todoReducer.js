@@ -28,6 +28,7 @@ export default function todoReducer (state, action) {
                 return {
                   item: task.item,
                   completed: action.payload.completed,
+                  compDate: new Date(),
                   id: task.id
                 };
               } else {
