@@ -60,7 +60,7 @@ test('calls props.markComplete fn when clicked', () => {
   const checkBoxElement = container.querySelector('input');
   const taskElement = getByText(/sample task/i);
   fireEvent.click(taskElement);
-  expect(mockDispatch.mock.calls.length).toBeGreaterThan(1);
+  expect(mockDispatch.mock.calls.length).toBeGreaterThan(0);
   fireEvent.click(checkBoxElement);
-  expect(mockDispatch.mock.calls.length).toBeGreaterThan(2);
+  expect(mockDispatch.mock.calls.length).toBeGreaterThan(1);
 });
