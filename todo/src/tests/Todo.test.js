@@ -3,8 +3,7 @@ import { render, fireEvent } from '@testing-library/react';
 import Todo from '../components/Todo';
 import moment from 'moment';
 
-const mockFunction = jest.fn();
-const mockSaveDueDate = jest.fn();
+const mockDispatch = jest.fn();
 
 const sampleTask = {
   item: 'Sample task',
@@ -14,17 +13,17 @@ const sampleTask = {
 };
 
 test('renders without crashing', () => {
-  render(<Todo task={sampleTask} saveDueDate={mockSaveDueDate}  />);
+  render(<Todo task={sampleTask} dispatch={mockDispatch}  />);
 });
 
 test('renders task text', () => {
-  const { getByText } = render(<Todo task={sampleTask} saveDueDate={mockSaveDueDate} />);
+  const { getByText } = render(<Todo task={sampleTask} dispatch={mockDispatch} />);
   const taskElement = getByText(/sample task/i);
   expect(taskElement).toBeInTheDocument();
 });
 
 test('renders uncompleted task correctly', () => {
-  const { container, getByText } = render(<Todo task={sampleTask} saveDueDate={mockSaveDueDate} />);
+  const { container, getByText } = render(<Todo task={sampleTask} dispatch={mockDispatch} />);
   const checkBoxElement = container.querySelector('input');
   expect(checkBoxElement.checked).toBeFalsy();
   const taskElement = getByText(/sample task/i);
@@ -33,21 +32,21 @@ test('renders uncompleted task correctly', () => {
 });
 
 test('renders overdue task correctly', ()=> {
-  const { getByTestId } = render(<Todo task={sampleTask} saveDueDate={mockSaveDueDate} />);
+  const { getByTestId } = render(<Todo task={sampleTask} dispatch={mockDispatch} />);
   const dueDateSpan = getByTestId('dueDateSpan');
   expect(dueDateSpan.textContent).toBe('Overdue! ');
   expect(dueDateSpan.textContent).not.toBe('Due date: ')
 });
 
 test('renders not overdue task correctly', ()=> {
-  const { getByTestId } = render(<Todo task={{...sampleTask, dueDate:'9999-12-31'}} saveDueDate={mockSaveDueDate} />);
+  const { getByTestId } = render(<Todo task={{...sampleTask, dueDate:'9999-12-31'}} dispatch={mockDispatch} />);
   const dueDateSpan = getByTestId('dueDateSpan');
   expect(dueDateSpan.textContent).not.toBe('Overdue! ');
   expect(dueDateSpan.textContent).toBe('Due date: ')
 });
 
 test('renders completed task correctly', () => {
-  const { container, getByText, getByTestId } = render(<Todo task={{...sampleTask, completed: true, compDate:'2020-04-23T01:19:09.783Z'}} saveDueDate={mockSaveDueDate} />);
+  const { container, getByText, getByTestId } = render(<Todo task={{...sampleTask, completed: true, compDate:'2020-04-23T01:19:09.783Z'}} dispatch={mockDispatch} />);
   const checkBoxElement = container.querySelector('input');
   expect(checkBoxElement.checked).toBeTruthy();
   const taskElement = getByText(/sample task/i);
@@ -57,11 +56,11 @@ test('renders completed task correctly', () => {
 });
 
 test('calls props.markComplete fn when clicked', () => {
-  const { container, getByText } = render(<Todo task={sampleTask} markComplete={mockFunction} saveDueDate={mockSaveDueDate} />);
+  const { container, getByText } = render(<Todo task={sampleTask} dispatch={mockDispatch} />);
   const checkBoxElement = container.querySelector('input');
   const taskElement = getByText(/sample task/i);
   fireEvent.click(taskElement);
-  expect(mockFunction.mock.calls.length).toBe(1);
+  expect(mockDispatch.mock.calls.length).toBeGreaterThan(1);
   fireEvent.click(checkBoxElement);
-  expect(mockFunction.mock.calls.length).toBe(2);
+  expect(mockDispatch.mock.calls.length).toBeGreaterThan(2);
 });
