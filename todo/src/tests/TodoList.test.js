@@ -23,11 +23,11 @@ const initialTodos = [
 ];
 
 test('renders without crashing', () => {
-  render(<TodoList state={{todos: initialTodos}} dispatch={mockDispatch}  />);
+  render(<TodoList state={{todos: initialTodos, visible: initialTodos}} dispatch={mockDispatch}  />);
 });
 
 test('renders todo items', () => {
-  const { getByText } = render(<TodoList state={{todos: initialTodos}} dispatch={mockDispatch} />);
+  const { getByText } = render(<TodoList state={{todos: initialTodos, visible: initialTodos}} dispatch={mockDispatch} />);
   const firstTodo = getByText(/learn about reducers/i);
   expect(firstTodo).toBeInTheDocument();
   const secondTodo = getByText(/organize garage/i);
