@@ -56,11 +56,10 @@ const FormDiv = styled.div`
 function TodoForm(props) {
   const [task, setTask] = useState("Task");
   const [searchFilter, setSearchFilter] = useState("Search");
-  const [state, dispatch] = useReducer(todoReducer, props.state);
 
   const submitTask = (event) => {
     event.preventDefault();
-    props.addTask(task);
+    props.dispatch({type: 'ADD', payload: task});
     event.target.reset();
     setTask('Task');
   };
@@ -71,7 +70,7 @@ function TodoForm(props) {
         <input onChange={event=>setTask(event.target.value)} placeholder={task} />
         <button className="button blueButton" type="submit">Add Task</button>
       </form>
-      <button className="button redButton" onClick={props.clearCompleted}>Clear Completed</button>
+      <button className="button redButton" onClick={()=>props.dispatch({type: 'CLEAR_COMPLETED'})}>Clear Completed</button>
     </FormDiv>
   );
 }
