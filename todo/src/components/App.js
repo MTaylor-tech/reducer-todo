@@ -1,4 +1,4 @@
-import React, {useReducer, useState, useEffect} from 'react';
+import React, {useReducer, useEffect} from 'react';
 import styled from 'styled-components';
 import '../stylesheets/App.css';
 import TodoList from './TodoList';
@@ -21,11 +21,11 @@ const MainDiv = styled.div`
 
 function App () {
   const [todos, setTodos] = useLocalStorage("myVeryAwesomeTodos",initialTodos);
-  const [state, dispatch] = useReducer(todoReducer, {todos: todos});
+  const [state, dispatch] = useReducer(todoReducer, {todos: todos, visible: todos});
 
   useEffect(()=>{
     setTodos(state.todos);
-  },[state]);
+  },[state, setTodos]);
 
   return (
     <MainDiv>

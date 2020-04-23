@@ -17,13 +17,15 @@ export const initialTodos = [
 ];
 
 export default function todoReducer (state, action) {
+  let newTodos = [];
   switch (action.type) {
       case 'INITIAL_VALUES':
-        return {...state, todos: initialTodos};
+        return {...state, todos: initialTodos, visible: initialTodos};
       case 'ADD':
-        return {...state, todos: [...state.todos, {item:action.payload, completed: false, id: new Date()}]};
+        newTodos = [...state.todos, {item:action.payload, completed: false, id: new Date()}];
+        return {...state, todos: newTodos, visible: newTodos};
       case 'TOGGLE_COMPLETED':
-        return {...state, todos: state.todos.map(task=>{
+        newTodos = state.todos.map(task=>{
               if (task.id===action.payload.taskId) {
                 return {
                   ...task,
@@ -32,19 +34,24 @@ export default function todoReducer (state, action) {
                 };
               } else {
                 return task;
-              }})};
+              }});
+        return {...state, todos: newTodos, visible: newTodos};
       case 'CLEAR_COMPLETED':
-        return {...state, todos: state.todos.filter(t=>t.completed===false)};
+        newTodos = state.todos.filter(t=>t.completed===false);
+        return {...state, todos: newTodos, visible: newTodos};
       case 'SET_DUE_DATE':
-      return {...state, todos: state.todos.map(task=>{
-            if (task.id===action.payload.taskId) {
-              return {
-                ...task,
-                dueDate: action.payload.dueDate
-              };
-            } else {
-              return task;
-            }})};
+        newTodos = state.todos.map(task=>{
+              if (task.id===action.payload.taskId) {
+                return {
+                  ...task,
+                  dueDate: action.payload.dueDate
+                };
+              } else {
+                return task;
+              }});
+        return {...state, todos: newTodos, visible: newTodos};
+      case 'SEARCH':
+        return {...state, visible: state.todos.filter(t=>t.item.toLowerCase().includes(action.payload.toLowerCase()))};
       default:
         return state;
     }

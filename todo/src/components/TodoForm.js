@@ -1,6 +1,5 @@
-import React, {useState, useReducer} from 'react';
+import React, {useState, useEffect} from 'react';
 import styled from 'styled-components';
-import todoReducer, {initialTodos} from '../reducers/todoReducer';
 
 const FormDiv = styled.div`
     .button {
@@ -64,11 +63,18 @@ function TodoForm(props) {
     setTask('Task');
   };
 
+  useEffect(()=>{
+    props.dispatch({type:'SEARCH',payload:searchFilter});
+  },[searchFilter]);
+
   return (
     <FormDiv>
       <form onSubmit={submitTask}>
         <input onChange={event=>setTask(event.target.value)} placeholder={task} />
         <button className="button blueButton" type="submit">Add Task</button>
+      </form>
+      <form onSubmit={e=>e.preventDefault()}>
+        <input onChange={event=>setSearchFilter(event.target.value)} placeholder={searchFilter} />
       </form>
       <button className="button redButton" onClick={()=>props.dispatch({type: 'CLEAR_COMPLETED'})}>Clear Completed</button>
     </FormDiv>

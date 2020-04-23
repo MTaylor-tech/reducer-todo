@@ -12,6 +12,8 @@ const TodoDiv = styled.div`
   margin: 2vh 2vw;
 
   label {
+    display: inline-block;
+    width: 50vw;
     font-size: 2.4rem;
     margin-left: 2vw;
   }
@@ -32,15 +34,6 @@ const TodoDiv = styled.div`
 
 function Todo(props) {
   const [dueDate, setDueDate] = useState(props.task.dueDate||undefined);
-  const [isOverdue, setIsOverdue] = useState();
-
-  const changeDueDate = (event) => {
-    setDueDate(event.target.value);
-  };
-
-  const saveDueDate = (event) => {
-    setDueDate(event.target.value);
-  };
 
   useEffect(()=>{
     props.dispatch({type: 'SET_DUE_DATE', payload: {taskId: props.task.id, dueDate: dueDate}});
@@ -50,7 +43,7 @@ function Todo(props) {
     <TodoDiv>
       {props.task.completed?<input name={props.task.id} type="checkbox" checked onChange={()=>props.dispatch({type: 'TOGGLE_COMPLETED', payload: {taskId: props.task.id, completed:false}})} />:<input name={props.task.id} type="checkbox" onChange={()=>props.dispatch({type: 'TOGGLE_COMPLETED', payload: {taskId: props.task.id, completed:true}})} />}
       {props.task.completed?<label htmlFor={props.task.id} className="strikeThru" onClick={()=>props.dispatch({type: 'TOGGLE_COMPLETED', payload: {taskId: props.task.id, completed:false}})} >{props.task.item}</label>:<label htmlFor={props.task.id} onClick={()=>props.dispatch({type: 'TOGGLE_COMPLETED', payload: {taskId: props.task.id, completed:true}})} >{props.task.item}</label>}
-      {props.task.completed&&props.task.compDate?<span data-testid="completedSpan">Completed: <Moment data-testid="moment" format={dateFormat}>{props.task.compDate}</Moment></span>:isItBeforeNow(props.task.dueDate)?<span data-testid="dueDateSpan" className="overdue">Overdue! <input data-testid="dueDateInput" type="date" value={dueDate} onChange={saveDueDate} onSubmit={saveDueDate} /></span>:<span data-testid="dueDateSpan">Due date: <input data-testid="dueDateInput" type="date" value={dueDate} onChange={saveDueDate} onSubmit={saveDueDate} /></span>}
+      {props.task.completed&&props.task.compDate?<span data-testid="completedSpan">Completed: <Moment data-testid="moment" format={dateFormat}>{props.task.compDate}</Moment></span>:isItBeforeNow(props.task.dueDate)?<span data-testid="dueDateSpan" className="overdue">Overdue! <input data-testid="dueDateInput" type="date" value={dueDate} onChange={e=>setDueDate(e.target.value)} onSubmit={e=>setDueDate(e.target.value)} /></span>:<span data-testid="dueDateSpan">Due date: <input data-testid="dueDateInput" type="date" value={dueDate} onChange={e=>setDueDate(e.target.value)} onSubmit={e=>setDueDate(e.target.value)} /></span>}
     </TodoDiv>
   );
 }
