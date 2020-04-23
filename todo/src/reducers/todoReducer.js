@@ -26,16 +26,25 @@ export default function todoReducer (state, action) {
         return {...state, todos: state.todos.map(task=>{
               if (task.id===action.payload.taskId) {
                 return {
-                  item: task.item,
+                  ...task,
                   completed: action.payload.completed,
                   compDate: new Date(),
-                  id: task.id
                 };
               } else {
                 return task;
               }})};
       case 'CLEAR_COMPLETED':
         return {...state, todos: state.todos.filter(t=>t.completed===false)};
+      case 'SET_DUE_DATE':
+      return {...state, todos: state.todos.map(task=>{
+            if (task.id===action.payload.taskId) {
+              return {
+                ...task,
+                dueDate: action.payload.dueDate
+              };
+            } else {
+              return task;
+            }})};
       default:
         return state;
     }
