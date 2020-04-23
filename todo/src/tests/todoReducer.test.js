@@ -10,7 +10,8 @@ const completedTestingState = {todos: [
   {
     item: 'Learn about reducers',
     completed: true,
-    id: 3892987589
+    id: 3892987589,
+    compDate: new Date()
   },
   {
     item: 'Organize Garage',
@@ -48,13 +49,6 @@ test('adds item on ADD call', ()=> {
   expect(newState).not.toEqual(initialState0);
   expect(newState).not.toEqual(initialState1);
   expect(newState.todos.filter(t=>t.item===sampleTask.item)).toBeDefined();
-});
-
-test('TOGGLE_COMPLETED call sets !completed', ()=> {
-  let newState = todoReducer(initialState1, {type: 'TOGGLE_COMPLETED', payload: {taskId: 3892987589, completed: true}});
-  expect(newState).toEqual(completedTestingState);
-  newState = todoReducer(newState, {type: 'TOGGLE_COMPLETED', payload: {taskId: 3892987589, completed: false}});
-  expect(newState).toEqual(initialState1);
 });
 
 test('CLEAR_COMPLETED works as promised', ()=> {

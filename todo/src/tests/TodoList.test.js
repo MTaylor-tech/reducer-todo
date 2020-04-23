@@ -2,7 +2,7 @@ import React from 'react';
 import { render } from '@testing-library/react';
 import TodoList from '../components/TodoList';
 
-const mockSaveDueDate = jest.fn();
+const mockDispatch = jest.fn();
 
 const initialTodos = [
   {
@@ -23,11 +23,11 @@ const initialTodos = [
 ];
 
 test('renders without crashing', () => {
-  render(<TodoList list={initialTodos} saveDueDate={mockSaveDueDate}  />);
+  render(<TodoList state={{todos: initialTodos}} dispatch={mockDispatch}  />);
 });
 
 test('renders todo items', () => {
-  const { getByText } = render(<TodoList list={initialTodos} saveDueDate={mockSaveDueDate} />);
+  const { getByText } = render(<TodoList state={{todos: initialTodos}} dispatch={mockDispatch} />);
   const firstTodo = getByText(/learn about reducers/i);
   expect(firstTodo).toBeInTheDocument();
   const secondTodo = getByText(/organize garage/i);
