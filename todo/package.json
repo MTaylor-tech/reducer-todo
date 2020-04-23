@@ -6,13 +6,17 @@
     "@testing-library/jest-dom": "^4.2.4",
     "@testing-library/react": "^9.3.2",
     "@testing-library/user-event": "^7.1.2",
+    "awesome-typescript-loader": "^5.2.1",
     "moment": "^2.24.0",
     "moment-timezone": "^0.5.28",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
     "react-moment": "^0.9.7",
     "react-scripts": "3.4.1",
-    "styled-components": "^5.1.0"
+    "source-map-loader": "^0.2.4",
+    "styled-components": "^5.1.0",
+    "typescript": "^3.8.3",
+    "typescript-eslint": "0.0.1-alpha.0"
   },
   "scripts": {
     "start": "react-scripts start",
@@ -34,5 +38,8 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "devDependencies": {
+    "@types/node": "^13.13.2"
   }
 }

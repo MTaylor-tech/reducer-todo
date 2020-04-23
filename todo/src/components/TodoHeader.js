@@ -1,22 +1,4 @@
 import React, {useState} from 'react';
-import styled from 'styled-components';
-
-const TodoHeaderDiv = styled.div`
-  margin: 2vh 2vw;
-
-  h2 {
-    display: inline-block;
-    width: 50vw;
-    font-size: 2.6rem;
-    margin-left: 4vw;
-  }
-
-  h3 {
-    display: inline-block;
-    font-size: 2.6rem;
-    margin: 0 20px;
-  }
-`;
 
 function TodoHeader(props) {
   const [reverse, setReverse] = useState({status: false, text: false, due: false});
@@ -41,11 +23,11 @@ function TodoHeader(props) {
   };
 
   return (
-    <TodoHeaderDiv>
+    <div className="todoHeader-div">
       <button onClick={()=>sortBy('STATUS')}>^</button>
-      <h2 onClick={()=>sortBy('TEXT')}>Task</h2>
-      <h3 onClick={()=>sortBy('DUE')}>Due Date</h3>
-    </TodoHeaderDiv>
+      <h2 className="todoHeader-h2" onClick={()=>sortBy('TEXT')}>Task</h2>
+      <h3 className="todoHeader-h3" onClick={()=>sortBy('DUE')}>Due Date</h3>
+    </div>
   );
 }
 
