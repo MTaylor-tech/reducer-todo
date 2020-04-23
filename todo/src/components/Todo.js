@@ -39,18 +39,17 @@ function Todo(props) {
   };
 
   const saveDueDate = (event) => {
-    event.preventDefault();
     setDueDate(event.target.value);
   };
 
   useEffect(()=>{
-    props.saveDueDate(props.task.id, dueDate);
+    props.dispatch({type: 'SET_DUE_DATE', payload: {taskId: props.task.id, dueDate: dueDate}});
   },[dueDate])
 
   return (
     <TodoDiv>
-      {props.task.completed?<input name={props.task.id} type="checkbox" checked onChange={()=>props.markComplete(props.task.id,false)} />:<input name={props.task.id} type="checkbox" onChange={()=>props.markComplete(props.task.id,true)} />}
-      {props.task.completed?<label htmlFor={props.task.id} className="strikeThru" onClick={()=>props.markComplete(props.task.id,false)} >{props.task.item}</label>:<label htmlFor={props.task.id} onClick={()=>props.markComplete(props.task.id,true)} >{props.task.item}</label>}
+      {props.task.completed?<input name={props.task.id} type="checkbox" checked onChange={()=>props.dispatch({type: 'TOGGLE_COMPLETED', payload: {taskId: props.task.id, completed:false}})} />:<input name={props.task.id} type="checkbox" onChange={()=>props.dispatch({type: 'TOGGLE_COMPLETED', payload: {taskId: props.task.id, completed:true}})} />}
+      {props.task.completed?<label htmlFor={props.task.id} className="strikeThru" onClick={()=>props.dispatch({type: 'TOGGLE_COMPLETED', payload: {taskId: props.task.id, completed:false}})} >{props.task.item}</label>:<label htmlFor={props.task.id} onClick={()=>props.dispatch({type: 'TOGGLE_COMPLETED', payload: {taskId: props.task.id, completed:true}})} >{props.task.item}</label>}
       {props.task.completed&&props.task.compDate?<span data-testid="completedSpan">Completed: <Moment data-testid="moment" format={dateFormat}>{props.task.compDate}</Moment></span>:isItBeforeNow(props.task.dueDate)?<span data-testid="dueDateSpan" className="overdue">Overdue! <input data-testid="dueDateInput" type="date" value={dueDate} onChange={saveDueDate} onSubmit={saveDueDate} /></span>:<span data-testid="dueDateSpan">Due date: <input data-testid="dueDateInput" type="date" value={dueDate} onChange={saveDueDate} onSubmit={saveDueDate} /></span>}
     </TodoDiv>
   );

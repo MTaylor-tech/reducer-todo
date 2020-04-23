@@ -27,27 +27,11 @@ function App () {
     setTodos(state.todos);
   },[state]);
 
-  const addTodo = (newTodo) => {
-    dispatch({type: 'ADD', payload: newTodo});
-  };
-
-  const markComplete = (taskId, completed) => {
-    dispatch({type: 'TOGGLE_COMPLETED', payload: {taskId: taskId, completed:completed}});
-  };
-
-  const clearCompleted = () => {
-    dispatch({type: 'CLEAR_COMPLETED'});
-  };
-
-  const saveDueDate = (taskId, dueDate) => {
-    dispatch({type: 'SET_DUE_DATE', payload: {taskId: taskId, dueDate: dueDate}});
-  };
-
   return (
     <MainDiv>
       <h1>Quick To-Do List</h1>
-      <TodoForm addTask={addTodo} clearCompleted={clearCompleted} />
-      <TodoList list={state.todos} markComplete={markComplete} saveDueDate={saveDueDate} />
+      <TodoForm state={state} dispatch={dispatch} />
+      <TodoList state={state} dispatch={dispatch} />
     </MainDiv>
   );
 }
