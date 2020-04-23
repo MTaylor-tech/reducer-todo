@@ -1,3 +1,5 @@
+import moment from 'moment';
+
 export const initialTodos = [
   {
     item: 'Learn about reducers',
@@ -52,6 +54,37 @@ export default function todoReducer (state, action) {
         return {...state, todos: newTodos, visible: newTodos};
       case 'SEARCH':
         return {...state, visible: state.todos.filter(t=>t.item.toLowerCase().includes(action.payload.toLowerCase()))};
+      case 'SORT_BY_TEXT':
+        newTodos = state.todos.sort((a, b)=>{
+          const x = a.item.toLowerCase();
+          const y = b.item.toLowerCase();
+          if (x < y) {return -1;}
+          if (x > y) {return 1;}
+          return 0;
+        });
+        if (action.payload.reverse) {
+          newTodos.reverse();
+        }
+        return {...state, visible: newTodos};
+      case 'SORT_BY_DUE':
+        newTodos = state.todos.sort((a, b)=>{
+          return moment(a.dueDate) - moment(b.dueDate);
+        });
+        if (action.payload.reverse) {
+          newTodos.reverse();
+        }
+        return {...state, visible: newTodos};
+      case 'SORT_BY_STATUS':
+        newTodos = state.todos.sort((a, b)=>{
+          if (a.completed&&!b.completed) {return -1;}
+          if (!a.completed&&b.completed) {return 1;}
+          if (a.completed&&b.completed) {return a.compDate - b.compDate;}
+          return 0;
+        });
+        if (action.payload.reverse) {
+          newTodos.reverse();
+        }
+        return {...state, visible: newTodos};
       default:
         return state;
     }
