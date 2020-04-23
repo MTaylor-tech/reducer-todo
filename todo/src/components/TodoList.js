@@ -6,7 +6,9 @@ function TodoList (props) {
   return(
     <div>
       <TodoHeader {...props} />
-      {props.state.visible.map(t=><Todo {...props} task={t} key={t.id} />)}
+      {props.state.visible.map(t=>
+        <Todo {...props} task={t} key={t.id} />
+      )}
     </div>
   );
 }

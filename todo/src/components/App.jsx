@@ -1,23 +1,9 @@
 import React, {useReducer, useEffect} from 'react';
-import styled from 'styled-components';
 import '../stylesheets/App.css';
 import TodoList from './TodoList';
 import TodoForm from './TodoForm';
-import todoReducer, {initialTodos} from '../reducers/todoReducer';
-import useLocalStorage from '../hooks/useLocalStorage';
-
-
-const MainDiv = styled.div`
-  height: 100vh;
-  width: 90vw;
-  padding: 5%;
-  background-color: black;
-  color: white;
-
-  h1 {
-    font-size: 3.6rem;
-  }
-`;
+import todoReducer, {initialTodos} from '../reducers/todoReducer.tsx';
+import useLocalStorage from '../hooks/useLocalStorage.tsx';
 
 function App () {
   const [todos, setTodos] = useLocalStorage("myVeryAwesomeTodos",initialTodos);
@@ -28,11 +14,11 @@ function App () {
   },[state, setTodos]);
 
   return (
-    <MainDiv>
-      <h1>Quick To-Do List</h1>
+    <div className="main-div">
+      <h1 className="main-h1">Quick To-Do List</h1>
       <TodoForm state={state} dispatch={dispatch} />
       <TodoList state={state} dispatch={dispatch} />
-    </MainDiv>
+    </div>
   );
 }
 
