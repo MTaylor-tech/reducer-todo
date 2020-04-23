@@ -1,6 +1,6 @@
 import moment from 'moment';
 
-export const initialTodos = [
+export const initialTodos: Array<any> = [
   {
     item: 'Learn about reducers',
     completed: false,
@@ -19,7 +19,7 @@ export const initialTodos = [
 ];
 
 export default function todoReducer(state: any, action: { type: string, payload?: any }): any {
-  let newTodos = [];
+  let newTodos: Array<any> = [];
   switch (action.type) {
     case 'INITIAL_VALUES':
       return { ...state, todos: initialTodos, visible: initialTodos };
@@ -27,7 +27,7 @@ export default function todoReducer(state: any, action: { type: string, payload?
       newTodos = [...state.todos, { item: action.payload, completed: false, id: new Date() }];
       return { ...state, todos: newTodos, visible: newTodos };
     case 'TOGGLE_COMPLETED':
-      newTodos = state.todos.map(task => {
+      newTodos = state.todos.map((task:any):any => {
         if (task.id === action.payload.taskId) {
           return {
             ...task,
@@ -40,10 +40,10 @@ export default function todoReducer(state: any, action: { type: string, payload?
       });
       return { ...state, todos: newTodos, visible: newTodos };
     case 'CLEAR_COMPLETED':
-      newTodos = state.todos.filter(t => t.completed === false);
+      newTodos = state.todos.filter((t:any):any => t.completed === false);
       return { ...state, todos: newTodos, visible: newTodos };
     case 'SET_DUE_DATE':
-      newTodos = state.todos.map(task => {
+      newTodos = state.todos.map((task:any):any => {
         if (task.id === action.payload.taskId) {
           return {
             ...task,
@@ -51,13 +51,13 @@ export default function todoReducer(state: any, action: { type: string, payload?
           };
         } else {
           return task;
-        }      
+        }
 });
       return { ...state, todos: newTodos, visible: newTodos };
     case 'SEARCH':
-      return { ...state, visible: state.todos.filter(t => t.item.toLowerCase().includes(action.payload.toLowerCase())) };
+      return { ...state, visible: state.todos.filter((t:any):any=> t.item.toLowerCase().includes(action.payload.toLowerCase())) };
     case 'SORT_BY_TEXT':
-      newTodos = state.todos.sort((a, b) => {
+      newTodos = state.todos.sort((a:any, b:any): Number => {
         const x = a.item.toLowerCase();
         const y = b.item.toLowerCase();
         if (x < y) { return -1; }
@@ -69,7 +69,7 @@ export default function todoReducer(state: any, action: { type: string, payload?
       }
       return { ...state, visible: newTodos };
     case 'SORT_BY_DUE':
-      newTodos = state.todos.sort((a, b) => {
+      newTodos = state.todos.sort((a:any, b:any):Number => {
         return moment(a.dueDate) - moment(b.dueDate);
       });
       if (action.payload.reverse) {
@@ -77,7 +77,7 @@ export default function todoReducer(state: any, action: { type: string, payload?
       }
       return { ...state, visible: newTodos };
     case 'SORT_BY_STATUS':
-      newTodos = state.todos.sort((a, b) => {
+      newTodos = state.todos.sort((a:any, b:any): Number => {
         if (a.completed && !b.completed) { return -1; }
         if (!a.completed && b.completed) { return 1; }
         if (a.completed && b.completed) { return a.compDate - b.compDate; }

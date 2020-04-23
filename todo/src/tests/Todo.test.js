@@ -27,8 +27,8 @@ test('renders uncompleted task correctly', () => {
   const checkBoxElement = container.querySelector('input');
   expect(checkBoxElement.checked).toBeFalsy();
   const taskElement = getByText(/sample task/i);
-  expect(taskElement.className).toBe('');
-  expect(taskElement.className).not.toBe('strikeThru');
+  expect(taskElement.className).toBe('todo-label');
+  expect(taskElement.className).not.toBe('todo-label strikeThru');
 });
 
 test('renders overdue task correctly', ()=> {
@@ -50,7 +50,7 @@ test('renders completed task correctly', () => {
   const checkBoxElement = container.querySelector('input');
   expect(checkBoxElement.checked).toBeTruthy();
   const taskElement = getByText(/sample task/i);
-  expect(taskElement.className).toBe('strikeThru');
+  expect(taskElement.className).toBe('todo-label strikeThru');
   const completedSpan = getByTestId('completedSpan');
   expect(completedSpan.textContent).toBe('Completed: 04/22/2020 9:19 PM');
 });

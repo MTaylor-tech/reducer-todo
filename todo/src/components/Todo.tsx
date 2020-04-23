@@ -2,13 +2,13 @@ import React, {useState, useEffect} from 'react';
 import Moment from 'react-moment';
 import moment from 'moment';
 
-const dateFormat = "L LT";
-const isItBeforeNow = (date) => {
+const dateFormat: string = "L LT";
+const isItBeforeNow = (date: string): boolean => {
   return (moment(date)<moment(new Date()));
 };
 
-function Todo(props) {
-  const [dueDate, setDueDate] = useState(props.task.dueDate||undefined);
+function Todo(props: any): JSX.Element {
+  const [dueDate, setDueDate] = useState<string>(props.task.dueDate||undefined);
 
   useEffect(()=>{
     props.dispatch({type: 'SET_DUE_DATE', payload: {taskId: props.task.id, dueDate: dueDate}});

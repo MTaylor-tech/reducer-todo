@@ -3,10 +3,9 @@ import { render } from '@testing-library/react';
 import todoReducer, {initialTodos} from '../reducers/todoReducer';
 
 const sampleTask = {item: 'Sample Task', completed: false, id: 1234}
-const initialState0 = {todos: [...initialTodos, sampleTask]};
-const initialState1 = {todos: initialTodos};
-
-const completedTestingState = {todos: [
+const initialState0 = {todos: [...initialTodos, sampleTask], visible: [...initialTodos, sampleTask]};
+const initialState1 = {todos: initialTodos, visible: initialTodos};
+const completedTestingTodos: Array<{item:string,completed:boolean,id:Number,compDate?:any}> = [
   {
     item: 'Learn about reducers',
     completed: true,
@@ -23,20 +22,21 @@ const completedTestingState = {todos: [
     id: 1528817084358,
     completed: false
   }
-]};
-
-const clearedTestingState = {todos: [
-  {
+];
+const completedTestingState: any = {todos: completedTestingTodos, visible: completedTestingTodos};
+const clearedTestingTodos: Array<{item:string,completed:boolean,id:Number,compDate?:any}> = [
+ {
     item: 'Organize Garage',
     id: 1528817077286,
     completed: false
   },
-  {
+ {
     item: 'Bake Cookies',
     id: 1528817084358,
     completed: false
   }
-]};
+];
+const clearedTestingState: any = {todos: clearedTestingTodos, visible: clearedTestingTodos};
 
 test('returns initial values in INITIAL_VALUES call', () => {
   const newState = todoReducer(initialState0, {type: 'INITIAL_VALUES'});
