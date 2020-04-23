@@ -25,7 +25,7 @@ function App () {
 
   useEffect(()=>{
     setTodos(state.todos);
-  },[state.todos]);
+  },[state]);
 
   const addTodo = (newTodo) => {
     dispatch({type: 'ADD', payload: newTodo});
@@ -39,11 +39,15 @@ function App () {
     dispatch({type: 'CLEAR_COMPLETED'});
   };
 
+  const saveDueDate = (taskId, dueDate) => {
+    dispatch({type: 'SET_DUE_DATE', payload: {taskId: taskId, dueDate: dueDate}});
+  };
+
   return (
     <MainDiv>
       <h1>Quick To-Do List</h1>
       <TodoForm addTask={addTodo} clearCompleted={clearCompleted} />
-      <TodoList list={state.todos} markComplete={markComplete} />
+      <TodoList list={state.todos} markComplete={markComplete} saveDueDate={saveDueDate} />
     </MainDiv>
   );
 }
