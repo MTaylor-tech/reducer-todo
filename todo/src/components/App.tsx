@@ -1,13 +1,14 @@
 import React, {useReducer, useEffect} from 'react';
 import '../stylesheets/App.css';
-import TodoList from './TodoList.tsx';
-import TodoForm from './TodoForm.tsx';
-import todoReducer, {initialTodos} from '../reducers/todoReducer.tsx';
-import useLocalStorage from '../hooks/useLocalStorage.tsx';
+import TodoList from './TodoList';
+import TodoForm from './TodoForm';
+import todoReducer from '../reducers/todoReducer';
+import {initialTodos} from '../reducers/todoReducer';
+import {useLocalStorage} from '../hooks/useLocalStorage';
 
-function App (): JSX.Element {
-  const [todos, setTodos] = useLocalStorage<String, Array<any>>("myVeryAwesomeTodos",initialTodos);
-  const [state, dispatch] = useReducer<React.Reducer<any, any>>(todoReducer, {todos: todos, visible: todos});
+export default function App () {
+  const [todos, setTodos] = useLocalStorage("myVeryAwesomeTodos",initialTodos);
+  const [state, dispatch] = useReducer(todoReducer, {todos: todos, visible: todos});
 
   useEffect(()=>{
     setTodos(state.todos);
@@ -21,5 +22,3 @@ function App (): JSX.Element {
     </div>
   );
 }
-
-export default App;
