@@ -10,6 +10,9 @@
 
 # production
 /build
+/todo/build
+/todo/ts-build
+/ts-build
 
 # misc
 .DS_Store

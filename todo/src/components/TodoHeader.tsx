@@ -1,9 +1,9 @@
 import React, {useState} from 'react';
 
-function TodoHeader(props) {
-  const [reverse, setReverse] = useState({status: false, text: false, due: false});
+function TodoHeader(props: any): JSX.Element {
+  const [reverse, setReverse] = useState<{status:boolean, text:boolean, due:boolean}>({status: false, text: false, due: false});
 
-  const sortBy = (type) => {
+  const sortBy = (type: string): void => {
     switch (type){
       case 'STATUS':
         props.dispatch({type: 'SORT_BY_STATUS', payload: {reverse: reverse.status}});

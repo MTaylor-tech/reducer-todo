@@ -1,6 +1,6 @@
 import React from 'react';
-import Todo from './Todo.tsx';
-import TodoHeader from './TodoHeader.tsx';
+import Todo from './Todo';
+import TodoHeader from './TodoHeader';
 
 function TodoList (props: any): JSX.Element {
   return(

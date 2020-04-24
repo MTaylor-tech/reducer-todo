@@ -1,10 +1,10 @@
 import React, {useState, useEffect} from 'react';
 
-function TodoForm(props) {
+function TodoForm(props: any): JSX.Element {
   const [task, setTask] = useState("Task");
   const [searchFilter, setSearchFilter] = useState("Search");
 
-  const submitTask = (event) => {
+  const submitTask = (event: React.FormEvent) => {
     event.preventDefault();
     props.dispatch({type: 'ADD', payload: task});
     event.target.reset();
